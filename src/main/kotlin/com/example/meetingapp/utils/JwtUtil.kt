@@ -3,6 +3,7 @@ package com.example.meetingapp.utils
 import io.jsonwebtoken.*
 import jakarta.annotation.PostConstruct
 import jakarta.servlet.http.HttpServletRequest
+import mu.KotlinLogging
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -18,6 +19,7 @@ class JwtUtil(private val userDetailsService: UserDetailsService) {
     // 토큰 유효시간 30분 설정
     private val tokenValidTime = 30 * 60 * 1000L
 
+    private val logger = KotlinLogging.logger{}
     @PostConstruct
     protected fun init(){
         secretKey = Base64.getEncoder().encodeToString(secretKey.toByteArray())
@@ -51,6 +53,7 @@ class JwtUtil(private val userDetailsService: UserDetailsService) {
     }
 
     fun resolveToken(request: HttpServletRequest): String?{
+        logger.info{request.getHeader("Authorization")}
         return request.getHeader("Authorization")
     }
 

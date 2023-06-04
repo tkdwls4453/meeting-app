@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 
 @Configuration
@@ -33,13 +34,20 @@ class SecurityConfig(
             .headers().frameOptions().disable()
             .and()
             .authorizeHttpRequests()
-            .requestMatchers("/api/**").authenticated()
-            .requestMatchers("/join", "/login", "/h2-console/**").permitAll()
+            .requestMatchers("/join", "/login", "/logout", "/h2-console/**").permitAll()
+            .requestMatchers("/api/**").hasRole("USER")
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .addFilterBefore(AuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter::class.java)
+//            .logout()
+//            .permitAll()
+//            .logoutRequestMatcher(AntPathRequestMatcher("/logout"))
+//            .invalidateHttpSession(true)
+//            .deleteCookies("Authorization")
+//            .logoutSuccessUrl("/logged_out")
+
 
         return http.build()
     }

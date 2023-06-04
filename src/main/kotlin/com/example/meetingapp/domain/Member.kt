@@ -1,8 +1,11 @@
 package com.example.meetingapp.domain
 
+import com.example.meetingapp.domain.enums.MemberRole
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.util.stream.Collectors
 
 @Entity
 class Member(
@@ -30,8 +33,9 @@ class Member(
         this.password = password
     }
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority>? {
-        return null
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+        val roles = mutableSetOf<MemberRole>(MemberRole.USER)
+        return roles.stream().map{ role -> SimpleGrantedAuthority("ROLE_$role")}.collect(Collectors.toSet())
     }
 
     override fun getPassword(): String {
