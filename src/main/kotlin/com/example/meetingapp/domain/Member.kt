@@ -9,25 +9,23 @@ import java.util.stream.Collectors
 
 @Entity
 class Member(
-    username: String,
-    password: String,
-    nickname: String
-) : BaseEntity(), UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    var id: Long?,
 
     @Column(nullable = false, unique = true)
-    private var username: String = username
-
-  
-    @Column(nullable = false)
-    private var password: String = password
-
+    private var username: String,
 
     @Column(nullable = false)
-    var nickname: String = nickname
+    private var password: String,
+
+    @Column(nullable = false, unique = true)
+    var nickname: String,
+
+    @OneToMany(fetch = FetchType.EAGER)
+    val createdMeeting : MutableList<Meeting> = mutableListOf(),
+
+) : BaseEntity(), UserDetails {
 
     fun updatePassword(password: String){
         this.password = password

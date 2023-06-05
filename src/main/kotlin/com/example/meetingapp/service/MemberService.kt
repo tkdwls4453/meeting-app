@@ -18,9 +18,10 @@ class MemberService(
 ) {
     fun createMember(request: SignUpRequest): MemberResponse {
         val member: Member = Member(
-            request.username,
-            request.password,
-            request.nickname
+            id = null,
+            username = request.username,
+            password = request.password,
+            nickname = request.nickname
         )
 
         if(existsMember(member.username)){
