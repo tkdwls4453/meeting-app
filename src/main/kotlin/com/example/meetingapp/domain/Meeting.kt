@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter
 
 
 @Entity
-@Table
 class Meeting(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -46,18 +46,16 @@ class MeetingController(
         meetingService.deleteMeeting(id)
     }
 
-    // 나의 모임 조회
-    @GetMapping("/mine")
-    fun readMyMeeting(
-        @AuthenticationPrincipal member: Member
-    ) = null
-
-    // 모임 이름 검색
-    @GetMapping()
-    fun search(
-        @RequestParam search: String
-    ) = null
-
-    
+//    // 나의 모임 조회
+//    @GetMapping("/mine")
+//    fun readMyMeeting(
+//        @AuthenticationPrincipal member: Member
+//    ) = null
+//
+//    // 모임 이름 검색
+//    @GetMapping()
+//    fun search(
+//        @RequestParam search: String
+//    ) = null
 
 }
